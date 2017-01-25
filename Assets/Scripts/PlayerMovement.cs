@@ -13,8 +13,15 @@ public class PlayerMovement : MonoBehaviour {
 	float vSpeed;
 	Animator anim;
 
+	public Transform frontCheck;
+	public Vector3 frontCheckBox;
+	Collider[] frontCol;
+	public Transform groundCheck;
+	Collider[] groundCol;
+
 	public bool remoteFWalk = false;
 	public float walkTime;
+	public bool remoteJump = false;
 
 	// Use this for initialization
 	void Start () {
@@ -27,6 +34,9 @@ public class PlayerMovement : MonoBehaviour {
 			Walk (1);
 			StartCoroutine ("RemoteWalkStop");
 		}
+		if (remoteJump) {
+			Jump ();
+		}
 
 		if (Input.GetAxis ("Horizontal") > 0) {
 			Walk (1);
@@ -35,14 +45,31 @@ public class PlayerMovement : MonoBehaviour {
 			Walk (-1);
 			anim.SetBool ("running", true);
 		}
-		if (Input.GetAxis ("Horizontal") == 0) {
-			//anim.SetBool ("running", false);
+		if ((!remoteFWalk) && (Input.GetAxis ("Horizontal") == 0)) {
+			anim.SetBool ("running", false);
 		}
 		vSpeed = GetComponent<Rigidbody> ().velocity.y;
 		anim.SetFloat ("vSpeed", vSpeed);
 		if (Input.GetKeyDown("space")){
 			Jump();
 		}
+
+		groundCol = Physics.OverlapSphere (groundCheck.position, 0.1f);
+		if ((groundCol.Length > 0) && (groundCol [groundCol.Length-1].tag == "Ground")) {
+			isGrounded = true;
+			anim.SetBool ("isGround", isGrounded);
+			remoteJump = false;
+		} else if (groundCol.Length == 0) {
+			isGrounded = false;
+			anim.SetBool ("isGround", isGrounded);
+		}
+
+		frontCol = Physics.OverlapBox (frontCheck.position, frontCheckBox);
+		if ((frontCol.Length > 0) && (frontCol[frontCol.Length-1].tag == "Ground")) {
+			anim.SetBool ("running", false);
+			remoteFWalk = false;
+		}
+			
 		
 	}
 
@@ -62,23 +89,21 @@ public class PlayerMovement : MonoBehaviour {
 		GetComponent<Rigidbody> ().AddForce (Vector3.up * jumpForce);
 	}
 
-	void OnCollisionEnter(Collision col){
-		if (col.gameObject.tag == "Ground") {	
-			isGrounded = true;
-			anim.SetBool ("isGround", isGrounded);
-		}
-
-		if (col.gameObject.tag == "Wave") {	
-			Debug.Log ("WAVE!");
-		}
-	}
-
-	void OnCollisionExit(Collision col){
-		if (col.gameObject.tag == "Ground") {
-			isGrounded = false;
-			anim.SetBool ("isGround", isGrounded);
-		}
-	}
+//	void OnCollisionEnter(Collision col){
+//		if (col.gameObject.tag == "Ground") {	
+//			isGrounded = true;
+//			anim.SetBool ("isGround", isGrounded);
+//		}
+//	}
+//
+//	void OnCollisionExit(Collision col){
+//		if (col.gameObject.tag == "Ground") {
+//			if (vSpeed > 0) {
+//				isGrounded = false;
+//				anim.SetBool ("isGround", isGrounded);
+//			}
+//		}
+//	}
 
 	IEnumerator RemoteWalkStop(){
 		yield return new WaitForSeconds (walkTime);
