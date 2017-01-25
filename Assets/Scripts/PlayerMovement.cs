@@ -13,6 +13,9 @@ public class PlayerMovement : MonoBehaviour {
 	float vSpeed;
 	Animator anim;
 
+	public bool remoteFWalk = false;
+	public float walkTime;
+
 	// Use this for initialization
 	void Start () {
 		anim = GetComponent<Animator> ();
@@ -20,6 +23,11 @@ public class PlayerMovement : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		if (remoteFWalk) {
+			Walk (1);
+			StartCoroutine ("RemoteWalkStop");
+		}
+
 		if (Input.GetAxis ("Horizontal") > 0) {
 			Walk (1);
 			anim.SetBool ("running", true);
@@ -28,7 +36,7 @@ public class PlayerMovement : MonoBehaviour {
 			anim.SetBool ("running", true);
 		}
 		if (Input.GetAxis ("Horizontal") == 0) {
-			anim.SetBool ("running", false);
+			//anim.SetBool ("running", false);
 		}
 		vSpeed = GetComponent<Rigidbody> ().velocity.y;
 		anim.SetFloat ("vSpeed", vSpeed);
@@ -40,6 +48,7 @@ public class PlayerMovement : MonoBehaviour {
 
 	void Walk(int dir){
 		transform.position = new Vector2 ((transform.position.x + ((speed*dir) * Time.deltaTime)), transform.position.y);
+		anim.SetBool ("running", true);
 		if ((dir < 0) && (!isMirror)) {
 			transform.localScale = new Vector3 (transform.localScale.x * -1, transform.localScale.y, transform.localScale.z);
 			isMirror = true;
@@ -58,6 +67,10 @@ public class PlayerMovement : MonoBehaviour {
 			isGrounded = true;
 			anim.SetBool ("isGround", isGrounded);
 		}
+
+		if (col.gameObject.tag == "Wave") {	
+			Debug.Log ("WAVE!");
+		}
 	}
 
 	void OnCollisionExit(Collision col){
@@ -65,6 +78,12 @@ public class PlayerMovement : MonoBehaviour {
 			isGrounded = false;
 			anim.SetBool ("isGround", isGrounded);
 		}
+	}
+
+	IEnumerator RemoteWalkStop(){
+		yield return new WaitForSeconds (walkTime);
+		anim.SetBool ("running", false);
+		remoteFWalk = false;
 	}
 
 }
