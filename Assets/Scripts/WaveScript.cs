@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class WaveScript : MonoBehaviour {
 
+	public bool toWalk = false;
+
+	public bool toJump = false;
+
+
 	// Use this for initialization
 	void Start () {
 		
@@ -15,10 +20,16 @@ public class WaveScript : MonoBehaviour {
 	}
 
 	void OnTriggerEnter(Collider col){
-		if (col.gameObject.tag == "Player") {
+		if ((col.gameObject.tag == "Player") && (toWalk)) {
 			Debug.Log ("Wave!");
 			//PlayerPrefs.SetInt ("walk", 1);
-			GameObject.Find("Player").GetComponent<PlayerMovement>().remoteFWalk = true;
+			col.gameObject.GetComponent<PlayerMovement>().remoteFWalk = true;
+		}
+
+		if ((col.gameObject.tag == "Player") && (toJump)) {
+			Debug.Log ("JUMP!");
+			//PlayerPrefs.SetInt ("walk", 1);
+			col.gameObject.GetComponent<PlayerMovement>().remoteJump = true;
 		}
 	}
 }

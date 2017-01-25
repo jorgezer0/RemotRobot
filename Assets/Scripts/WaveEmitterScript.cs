@@ -4,8 +4,17 @@ using UnityEngine;
 
 public class WaveEmitterScript : MonoBehaviour {
 
+	public enum actions {
+		walk,
+		jump
+	}
+
+	public actions Actions;
+
 	public GameObject wave;
-	GameObject newWave;
+	public Color walkWave;
+	public Color jumpWave;
+	//GameObject newWave;
 
 	// Use this for initialization
 	void Start () {
@@ -14,16 +23,33 @@ public class WaveEmitterScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (Input.GetKeyDown ("z")) {
-			newWave = Instantiate (wave, transform.position, Quaternion.identity);
-			newWave.GetComponent<Animator> ().Play("Wave", -1, 0f);
-			StartCoroutine ("DestroyWave");
-
+		if (Actions == actions.walk){
+			if (Input.GetKeyDown ("z")) {
+				//newWave = Instantiate (wave, transform.position, Quaternion.identity);
+				wave.SetActive (true);
+				wave.GetComponent<SpriteRenderer>().color = walkWave;
+				wave.GetComponent<WaveScript> ().toWalk = true;
+				wave.GetComponent<Animator> ().Play ("Wave", -1, 0f);
+				StopCoroutine ("DestroyWave");
+				StartCoroutine ("DestroyWave");
+			}
 		}
+		if (Actions == actions.jump){
+			if (Input.GetKeyDown ("x")) {
+				//newWave = Instantiate (wave, transform.position, Quaternion.identity);
+				wave.SetActive (true);
+				wave.GetComponent<WaveScript>().toJump = true;
+				wave.GetComponent<SpriteRenderer>().color = jumpWave;
+				wave.GetComponent<Animator> ().Play ("Wave", -1, 0f);
+				StopCoroutine ("DestroyWave");
+				StartCoroutine ("DestroyWave");
+			}
+		}
+
 	}
 
 	IEnumerator DestroyWave(){
 		yield return new WaitForSeconds (5);
-		Destroy (newWave);
+		wave.SetActive (false);
 	}
 }
