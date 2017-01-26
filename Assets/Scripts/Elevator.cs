@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ElevatorScript : MonoBehaviour {
+public class Elevator
+	: MonoBehaviour {
 
 	public Transform maxH;
 	public Transform minH;

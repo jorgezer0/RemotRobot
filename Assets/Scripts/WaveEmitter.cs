@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WaveEmitterScript : MonoBehaviour {
+public class WaveEmitter : MonoBehaviour {
 
 	public enum actions {
 		walk,
@@ -11,18 +11,39 @@ public class WaveEmitterScript : MonoBehaviour {
 
 	public actions Actions;
 
+	public GameObject light;
+	Renderer lightColor;
+
+	SpriteRenderer waveColor;
+	WaveBehaviour waveScript;
+	Animator waveAnim;
+
 	public GameObject wave;
 	public Color walkWave;
 	public Color jumpWave;
+
+	void Start(){
+		waveColor = wave.GetComponent<SpriteRenderer> ();
+		waveScript = wave.GetComponent<WaveBehaviour> ();
+		waveAnim = wave.GetComponent<Animator> ();
+		lightColor = light.GetComponent<Renderer> ();
+		if (Actions == actions.walk) {
+			waveColor.color = walkWave;
+			lightColor.material.color = walkWave;
+		} else if (Actions == actions.jump) {
+			waveColor.color = jumpWave;
+			lightColor.material.color = jumpWave;
+		}
+
+	}
 
 	void Update () {
 		if (Actions == actions.walk){
 			if (Input.GetKeyDown ("z")) {
 				//newWave = Instantiate (wave, transform.position, Quaternion.identity);
 				wave.SetActive (true);
-				wave.GetComponent<SpriteRenderer>().color = walkWave;
-				wave.GetComponent<WaveScript> ().toWalk = true;
-				wave.GetComponent<Animator> ().Play ("Wave", -1, 0f);
+				waveScript.toWalk = true;
+				waveAnim.Play ("Wave", -1, 0f);
 				StopCoroutine ("DestroyWave");
 				StartCoroutine ("DestroyWave");
 			}
@@ -31,9 +52,8 @@ public class WaveEmitterScript : MonoBehaviour {
 			if (Input.GetKeyDown ("x")) {
 				//newWave = Instantiate (wave, transform.position, Quaternion.identity);
 				wave.SetActive (true);
-				wave.GetComponent<WaveScript>().toJump = true;
-				wave.GetComponent<SpriteRenderer>().color = jumpWave;
-				wave.GetComponent<Animator> ().Play ("Wave", -1, 0f);
+				waveScript.toJump = true;
+				waveAnim.Play ("Wave", -1, 0f);
 				StopCoroutine ("DestroyWave");
 				StartCoroutine ("DestroyWave");
 			}

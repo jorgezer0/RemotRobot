@@ -42,7 +42,7 @@ GameObject:
   - component: {fileID: 114748785725067838}
   m_Layer: 0
   m_Name: Wave
-  m_TagString: Untagged
+  m_TagString: Wave
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -207,10 +207,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1562772087502626}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 50d5118fe52d3bf4e9e93f25bde0439d, type: 3}
+  m_Script: {fileID: 11500000, guid: bcc725e8a466ddc4b83c6651b96aee3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Actions: 0
+  light: {fileID: 1092472320420046}
   wave: {fileID: 1293239765021740}
   walkWave: {r: 0.22394033, g: 0.29961663, b: 0.8014706, a: 1}
   jumpWave: {r: 0.19912416, g: 0.9338235, b: 0.23459247, a: 1}
@@ -222,9 +223,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1293239765021740}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1da5ae52f2f768341a72bc57f545b0f5, type: 3}
+  m_Script: {fileID: 11500000, guid: 943f4f971faa957408620579b453a249, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isSet: 0
   toWalk: 0
   toJump: 0
 --- !u!136 &136659984068060208

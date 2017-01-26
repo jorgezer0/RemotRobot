@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraScript : MonoBehaviour {
+public class CameraMovement : MonoBehaviour {
 
 	public Transform player;
 	Vector3 playerPosition;

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour {
 
+	Rigidbody rigid;
 	public float speed;
 	public float jumpForce;
 	bool isGrounded;
@@ -24,6 +25,7 @@ public class PlayerMovement : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		rigid = GetComponent<Rigidbody> ();
 		anim = GetComponent<Animator> ();
 	}
 	
@@ -68,12 +70,10 @@ public class PlayerMovement : MonoBehaviour {
 			anim.SetBool ("running", false);
 			remoteFWalk = false;
 		}
-			
-		
 	}
 
 	void Walk(int dir){
-		transform.position = new Vector2 ((transform.position.x + ((speed*dir) * Time.deltaTime)), transform.position.y);
+		rigid.velocity = new Vector2 ((speed*dir), rigid.velocity.y);
 		anim.SetBool ("running", true);
 		if ((dir < 0) && (!isMirror)) {
 			transform.localScale = new Vector3 (transform.localScale.x * -1, transform.localScale.y, transform.localScale.z);
@@ -94,6 +94,14 @@ public class PlayerMovement : MonoBehaviour {
 		yield return new WaitForSeconds (walkTime);
 		anim.SetBool ("running", false);
 		remoteFWalk = false;
+	}
+
+	void OnTriggerEnter(Collider col){
+		if (col.gameObject.tag == "Wave") {
+			if ((!remoteFWalk) || (!remoteJump)) {
+				col.gameObject.GetComponent<WaveBehaviour> ().isSet = false;
+			}
+		}
 	}
 
 }
