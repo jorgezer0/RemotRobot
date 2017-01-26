@@ -10,12 +10,6 @@ public class ElevatorScript : MonoBehaviour {
 	public float smoothTime;
 	bool isUp = false;
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
 	void FixedUpdate () {
 		if (!isUp) {
 			transform.position = Vector3.SmoothDamp (transform.position, maxH.position, ref vel, smoothTime);

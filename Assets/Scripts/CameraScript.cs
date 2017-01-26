@@ -11,12 +11,6 @@ public class CameraScript : MonoBehaviour {
 	Vector3 vel = Vector3.zero;
 	bool isFlip = false;
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
 	void Update () {
 		playerPosition = player.TransformPoint (followPos);
 		transform.position = Vector3.SmoothDamp (transform.position, playerPosition, ref vel, smoothTime);

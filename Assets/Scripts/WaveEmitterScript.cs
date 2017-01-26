@@ -14,14 +14,7 @@ public class WaveEmitterScript : MonoBehaviour {
 	public GameObject wave;
 	public Color walkWave;
 	public Color jumpWave;
-	//GameObject newWave;
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
 	void Update () {
 		if (Actions == actions.walk){
 			if (Input.GetKeyDown ("z")) {
