@@ -6,7 +6,6 @@ public class PlayerMovement : MonoBehaviour {
 
 	public float speed;
 	public float jumpForce;
-	public GameObject feet;
 	bool isGrounded;
 	public LayerMask ground;
 	bool isMirror = false;
@@ -86,25 +85,11 @@ public class PlayerMovement : MonoBehaviour {
 	}
 
 	void Jump(){
-		GetComponent<Rigidbody> ().AddForce (Vector3.up * jumpForce);
+		if (isGrounded) {
+			GetComponent<Rigidbody> ().AddForce (Vector3.up * jumpForce);
+		}
 	}
-
-//	void OnCollisionEnter(Collision col){
-//		if (col.gameObject.tag == "Ground") {	
-//			isGrounded = true;
-//			anim.SetBool ("isGround", isGrounded);
-//		}
-//	}
-//
-//	void OnCollisionExit(Collision col){
-//		if (col.gameObject.tag == "Ground") {
-//			if (vSpeed > 0) {
-//				isGrounded = false;
-//				anim.SetBool ("isGround", isGrounded);
-//			}
-//		}
-//	}
-
+		
 	IEnumerator RemoteWalkStop(){
 		yield return new WaitForSeconds (walkTime);
 		anim.SetBool ("running", false);

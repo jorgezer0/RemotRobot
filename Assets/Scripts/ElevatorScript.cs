@@ -16,7 +16,7 @@ public class ElevatorScript : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void FixedUpdate () {
 		if (!isUp) {
 			transform.position = Vector3.SmoothDamp (transform.position, maxH.position, ref vel, smoothTime);
 			if (transform.position == maxH.position) {
