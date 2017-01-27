@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour {
 
@@ -70,6 +71,11 @@ public class PlayerMovement : MonoBehaviour {
 			anim.SetBool ("running", false);
 			remoteFWalk = false;
 		}
+
+		if (Input.GetKeyDown("r")){
+			Scene actual = SceneManager.GetActiveScene ();
+			SceneManager.LoadScene (actual.name);
+		}
 	}
 
 	void Walk(int dir){
@@ -97,11 +103,11 @@ public class PlayerMovement : MonoBehaviour {
 	}
 
 	void OnTriggerEnter(Collider col){
-		if (col.gameObject.tag == "Wave") {
-			if ((!remoteFWalk) || (!remoteJump)) {
-				col.gameObject.GetComponent<WaveBehaviour> ().isSet = false;
-			}
-		}
+//		if (col.gameObject.tag == "Wave") {
+//			if ((!remoteFWalk) || (!remoteJump)) {
+//				col.gameObject.GetComponent<WaveBehaviour> ().isSet = false;
+//			}
+//		}
 	}
 
 }

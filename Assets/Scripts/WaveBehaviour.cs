@@ -9,7 +9,7 @@ public class WaveBehaviour : MonoBehaviour {
 	public bool toJump = false;
 
 	void OnTriggerEnter(Collider col){
-		if (!isSet) {
+//		if (!isSet) {
 			if ((col.gameObject.tag == "Player") && (toWalk)) {
 				isSet = true;
 				Debug.Log ("Wave!");
@@ -23,6 +23,6 @@ public class WaveBehaviour : MonoBehaviour {
 				//PlayerPrefs.SetInt ("walk", 1);
 				col.gameObject.GetComponent<PlayerMovement> ().remoteJump = true;
 			}
-		}
+//		}
 	}
 }

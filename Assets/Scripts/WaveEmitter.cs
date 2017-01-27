@@ -62,7 +62,7 @@ public class WaveEmitter : MonoBehaviour {
 	}
 
 	IEnumerator DestroyWave(){
-		yield return new WaitForSeconds (5);
+		yield return new WaitForSeconds (1.6f);
 		wave.SetActive (false);
 	}
 }
