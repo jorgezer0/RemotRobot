@@ -21,6 +21,7 @@ public class PlayerMovement : MonoBehaviour {
 	Collider[] groundCol;
 
 	public bool remoteFWalk = false;
+	bool isWalking = false;
 	public float walkTime;
 	public bool remoteJump = false;
 
@@ -33,8 +34,12 @@ public class PlayerMovement : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (remoteFWalk) {
+			Debug.Log ("Start Walk.");
 			Walk (1);
-			StartCoroutine ("RemoteWalkStop");
+			if (!isWalking) {
+				isWalking = true;
+				StartCoroutine ("RemoteWalkStop");
+			}
 		}
 		if (remoteJump) {
 			Jump ();
@@ -98,6 +103,8 @@ public class PlayerMovement : MonoBehaviour {
 		
 	IEnumerator RemoteWalkStop(){
 		yield return new WaitForSeconds (walkTime);
+		isWalking = false;
+		Debug.Log ("Stop Walk.");
 		anim.SetBool ("running", false);
 		remoteFWalk = false;
 	}

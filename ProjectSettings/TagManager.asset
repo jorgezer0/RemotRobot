@@ -6,6 +6,11 @@ TagManager:
   tags:
   - Ground
   - Wave
+  - TouchWalk
+  - TouchJump
+  - Emitter
+  - RestartButton
+  - ExitButton
   layers:
   - Default
   - TransparentFX
