@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Battery : MonoBehaviour {
 
@@ -22,10 +23,16 @@ public class Battery : MonoBehaviour {
 	public float smoothTime;
 	public Vector3 finalRot;
 
+	Scene actual;
+	bool counted = false;
+
 	// Use this for initialization
 	void Start () {
 		rend = GetComponent<Renderer> ();
 		mat = rend.material;
+		actual = SceneManager.GetActiveScene ();
+		//PlayerPrefs.SetInt (actual.name + "Bat", 0);
+
 	}
 
 	// Update is called once per frame
@@ -55,6 +62,10 @@ public class Battery : MonoBehaviour {
 	void OnTriggerEnter(Collider col){
 		if (col.gameObject.tag == "Player") {
 			colected = true;
+			if ((PlayerPrefs.GetInt (actual.name + "Bat") < 3) && (!counted)) {
+				PlayerPrefs.SetInt (actual.name + "Bat", ((PlayerPrefs.GetInt (actual.name + "Bat") + 1)));
+				counted = true;
+			}
 		}
 	}
 

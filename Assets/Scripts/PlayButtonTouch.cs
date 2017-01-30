@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class RestartTouch : MonoBehaviour {
-	
+public class PlayButtonTouch : MonoBehaviour {
+
+	public string scene;
+	bool statusChanged = false;
+
 	void OnMouseDown(){
-		Scene actual = SceneManager.GetActiveScene ();
-		SceneManager.LoadScene (actual.name);
+		SceneManager.LoadScene ("LevelSelect");
 	}
 }

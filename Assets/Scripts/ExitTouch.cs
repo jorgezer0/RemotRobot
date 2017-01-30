@@ -5,21 +5,13 @@ using UnityEngine.SceneManagement;
 
 public class ExitTouch : MonoBehaviour {
 
-	bool statusChanged = false;
+	public bool exitGame = false;
 
-	void Update () {
-		if (Input.touchCount > 0) {
-			Ray wp = Camera.main.ScreenPointToRay (Input.GetTouch (0).position);
-			RaycastHit hit;
-			if (Physics.Raycast (wp, out hit)) {
-				if ((!statusChanged) && (hit.transform.tag == "ExitButton")) {
-					SceneManager.LoadScene ("Title");
-				}
-				statusChanged = true;
-			}
+	void OnMouseDown(){
+		if (!exitGame) {
+			SceneManager.LoadScene ("Title");
+		} else if (exitGame) {
+			Application.Quit ();
 		}
-		if (Input.touchCount == 0) {
-			statusChanged = false;
-		}		
 	}
 }
