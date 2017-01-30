@@ -41,28 +41,40 @@ public class WaveEmitter : MonoBehaviour {
 		if (Actions == actions.walk){
 			if (Input.GetKeyDown ("z")) {
 				//newWave = Instantiate (wave, transform.position, Quaternion.identity);
-				wave.SetActive (true);
-				waveScript.toWalk = true;
-				waveAnim.Play ("Wave", -1, 0f);
-				StopCoroutine ("DestroyWave");
-				StartCoroutine ("DestroyWave");
+				EmitWalk();
 			}
 		}
 		if (Actions == actions.jump){
 			if (Input.GetKeyDown ("x")) {
 				//newWave = Instantiate (wave, transform.position, Quaternion.identity);
-				wave.SetActive (true);
-				waveScript.toJump = true;
-				waveAnim.Play ("Wave", -1, 0f);
-				StopCoroutine ("DestroyWave");
-				StartCoroutine ("DestroyWave");
+				EmitJump();
 			}
 		}
 
 	}
 
 	IEnumerator DestroyWave(){
-		yield return new WaitForSeconds (5);
+		yield return new WaitForSeconds (1.6f);
 		wave.SetActive (false);
+	}
+
+	public void EmitWalk(){
+		if (Actions == actions.walk) {
+			wave.SetActive (true);
+			waveScript.toWalk = true;
+			waveAnim.Play ("Wave", -1, 0f);
+			StopCoroutine ("DestroyWave");
+			StartCoroutine ("DestroyWave");
+		}
+	}
+
+	public void EmitJump(){
+		if (Actions == actions.jump) {
+			wave.SetActive (true);
+			waveScript.toJump = true;
+			waveAnim.Play ("Wave", -1, 0f);
+			StopCoroutine ("DestroyWave");
+			StartCoroutine ("DestroyWave");
+		}
 	}
 }

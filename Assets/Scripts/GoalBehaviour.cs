@@ -1,8 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GoalBehaviour : MonoBehaviour {
+
+	public string toLevel;
 
 	public GameObject light1;
 	public GameObject light2;
@@ -28,6 +31,12 @@ public class GoalBehaviour : MonoBehaviour {
 			col.gameObject.GetComponent<PlayerMovement> ().remoteFWalk = false;
 			light1Color.material.color = Color.green;
 			light2Color.material.color = Color.green;
+			StartCoroutine ("WaitToWarp");
 		}
+	}
+
+	IEnumerator WaitToWarp(){
+		yield return new WaitForSeconds (1);
+		SceneManager.LoadScene ("Level" + toLevel);
 	}
 }

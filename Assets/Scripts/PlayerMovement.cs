@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour {
 
@@ -20,6 +21,7 @@ public class PlayerMovement : MonoBehaviour {
 	Collider[] groundCol;
 
 	public bool remoteFWalk = false;
+	bool isWalking = false;
 	public float walkTime;
 	public bool remoteJump = false;
 
@@ -32,8 +34,12 @@ public class PlayerMovement : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (remoteFWalk) {
+			Debug.Log ("Start Walk.");
 			Walk (1);
-			StartCoroutine ("RemoteWalkStop");
+			if (!isWalking) {
+				isWalking = true;
+				StartCoroutine ("RemoteWalkStop");
+			}
 		}
 		if (remoteJump) {
 			Jump ();
@@ -70,6 +76,11 @@ public class PlayerMovement : MonoBehaviour {
 			anim.SetBool ("running", false);
 			remoteFWalk = false;
 		}
+
+		if (Input.GetKeyDown("r")){
+			Scene actual = SceneManager.GetActiveScene ();
+			SceneManager.LoadScene (actual.name);
+		}
 	}
 
 	void Walk(int dir){
@@ -92,16 +103,18 @@ public class PlayerMovement : MonoBehaviour {
 		
 	IEnumerator RemoteWalkStop(){
 		yield return new WaitForSeconds (walkTime);
+		isWalking = false;
+		Debug.Log ("Stop Walk.");
 		anim.SetBool ("running", false);
 		remoteFWalk = false;
 	}
 
 	void OnTriggerEnter(Collider col){
-		if (col.gameObject.tag == "Wave") {
-			if ((!remoteFWalk) || (!remoteJump)) {
-				col.gameObject.GetComponent<WaveBehaviour> ().isSet = false;
-			}
-		}
+//		if (col.gameObject.tag == "Wave") {
+//			if ((!remoteFWalk) || (!remoteJump)) {
+//				col.gameObject.GetComponent<WaveBehaviour> ().isSet = false;
+//			}
+//		}
 	}
 
 }
