@@ -11,6 +11,8 @@ TagManager:
   - Emitter
   - RestartButton
   - ExitButton
+  - LevelButton
+  - PlayButton
   layers:
   - Default
   - TransparentFX

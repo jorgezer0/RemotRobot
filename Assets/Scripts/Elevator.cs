@@ -2,14 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Elevator
-	: MonoBehaviour {
+public class Elevator : MonoBehaviour {
 
 	public Transform maxH;
 	public Transform minH;
 	Vector3 vel = Vector3.zero;
 	public float smoothTime;
-	bool isUp = false;
+	public bool isUp = false;
 
 	void FixedUpdate () {
 		if (!isUp) {

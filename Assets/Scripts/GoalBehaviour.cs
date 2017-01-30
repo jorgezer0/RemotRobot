@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class GoalBehaviour : MonoBehaviour {
 
-	public string toLevel;
+	public int toLevel;
 
 	public GameObject light1;
 	public GameObject light2;
@@ -27,7 +27,7 @@ public class GoalBehaviour : MonoBehaviour {
 	}
 
 	void OnCollisionEnter(Collision col){
-		if ((col.gameObject.tag == "Player") && (col.transform.position.x > (transform.position.x - 0.7f))) {
+		if ((col.gameObject.tag == "Player") && (col.transform.position.x > (transform.position.x - 0.8f))) {
 			col.gameObject.GetComponent<PlayerMovement> ().remoteFWalk = false;
 			light1Color.material.color = Color.green;
 			light2Color.material.color = Color.green;
@@ -37,6 +37,10 @@ public class GoalBehaviour : MonoBehaviour {
 
 	IEnumerator WaitToWarp(){
 		yield return new WaitForSeconds (1);
-		SceneManager.LoadScene ("Level" + toLevel);
+		if (toLevel > 0) {
+			SceneManager.LoadScene ("Level" + toLevel);
+		} else if (toLevel == 0) {
+			SceneManager.LoadScene ("LevelSelect");
+		}
 	}
 }

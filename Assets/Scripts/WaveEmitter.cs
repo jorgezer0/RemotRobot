@@ -11,7 +11,7 @@ public class WaveEmitter : MonoBehaviour {
 
 	public actions Actions;
 
-	public GameObject light;
+	public GameObject wLight;
 	Renderer lightColor;
 
 	SpriteRenderer waveColor;
@@ -26,7 +26,7 @@ public class WaveEmitter : MonoBehaviour {
 		waveColor = wave.GetComponent<SpriteRenderer> ();
 		waveScript = wave.GetComponent<WaveBehaviour> ();
 		waveAnim = wave.GetComponent<Animator> ();
-		lightColor = light.GetComponent<Renderer> ();
+		lightColor = wLight.GetComponent<Renderer> ();
 		if (Actions == actions.walk) {
 			waveColor.color = walkWave;
 			lightColor.material.color = walkWave;
