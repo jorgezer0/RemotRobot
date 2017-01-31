@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class RestartTouch : MonoBehaviour {
 	
-	void OnMouseDown(){
+	void OnMouseDown(){ // Restart the level;
 		Scene actual = SceneManager.GetActiveScene ();
 		SceneManager.LoadScene (actual.name);
 	}

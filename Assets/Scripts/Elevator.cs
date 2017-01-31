@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class Elevator : MonoBehaviour {
 
-	public Transform maxH;
-	public Transform minH;
+
+	public Transform maxH; // Max position of the elevator;
+	public Transform minH; // Min position of the elevator;
 	Vector3 vel = Vector3.zero;
 	public float smoothTime;
-	public bool isUp = false;
+	public bool isUp = false; // Check if the elevator reach the max position;
 
 	void FixedUpdate () {
 		if (!isUp) {

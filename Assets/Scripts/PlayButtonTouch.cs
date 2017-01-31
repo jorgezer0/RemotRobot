@@ -6,9 +6,8 @@ using UnityEngine.SceneManagement;
 public class PlayButtonTouch : MonoBehaviour {
 
 	public string scene;
-	bool statusChanged = false;
 
-	void OnMouseDown(){
-		SceneManager.LoadScene ("LevelSelect");
+	void OnMouseDown(){ // Load the level select scene;
+		SceneManager.LoadScene (scene);
 	}
 }

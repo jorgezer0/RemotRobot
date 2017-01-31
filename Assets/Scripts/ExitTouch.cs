@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class ExitTouch : MonoBehaviour {
 
+	// Bool to check if this Exit Button is intended to exit the level or the game;
 	public bool exitGame = false;
 
 	void OnMouseDown(){

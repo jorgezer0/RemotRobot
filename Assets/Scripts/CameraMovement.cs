@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class CameraMovement : MonoBehaviour {
 
+	// Variables to set camera follow behaviour;
 	public Transform player;
 	Vector3 playerPosition;
 	public Vector3 followPos;
@@ -14,16 +15,5 @@ public class CameraMovement : MonoBehaviour {
 	void Update () {
 		playerPosition = player.TransformPoint (followPos);
 		transform.position = Vector3.SmoothDamp (transform.position, playerPosition, ref vel, smoothTime);
-	}
-
-	public void FlipCamera(int dir){
-		if ((dir < 0) && (!isFlip)) {
-			playerPosition.x = playerPosition.x * -1;
-			isFlip = true;
-		} else if ((dir > 0) && (isFlip)) {
-			playerPosition.x = playerPosition.x * -1;
-			isFlip = false;
-		}
-
 	}
 }

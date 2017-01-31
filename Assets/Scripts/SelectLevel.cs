@@ -9,12 +9,12 @@ public class SelectLevel : MonoBehaviour {
 	public TextMesh number;
 	public TextMesh btQty;
 
-	void Start(){
+	void Start(){ // Set the text on button to the level it calls;
 		number.text = level.ToString ();
 		btQty.text = ("x " + PlayerPrefs.GetInt ("Level" + level + "Bat").ToString());
 	}
 
-	void OnMouseDown(){
+	void OnMouseDown(){ // Go to level;
 		SceneManager.LoadScene ("Level"+level);
 	}
 }

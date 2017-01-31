@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour {
 
+	// Variables to player movement;
 	Rigidbody rigid;
 	public float speed;
 	public float jumpForce;
@@ -14,53 +15,48 @@ public class PlayerMovement : MonoBehaviour {
 	float vSpeed;
 	Animator anim;
 
+	// Variables to check collisions;
 	public Transform frontCheck;
 	public Vector3 frontCheckBox;
 	Collider[] frontCol;
 	public Transform groundCheck;
 	Collider[] groundCol;
 
+	// Variables to remote commands;
 	public bool remoteFWalk = false;
 	bool isWalking = false;
 	public float walkTime;
 	public bool remoteJump = false;
 
-	// Use this for initialization
+	// Get RigidBody and Animator for manipulations;
 	void Start () {
 		rigid = GetComponent<Rigidbody> ();
 		anim = GetComponent<Animator> ();
 	}
-	
-	// Update is called once per frame
+
 	void Update () {
-		if (remoteFWalk) {
-			Debug.Log ("Start Walk.");
+		if (remoteFWalk) { // Check if commando to walk was received;
 			Walk (1);
 			if (!isWalking) {
 				isWalking = true;
-				StartCoroutine ("RemoteWalkStop");
+				StartCoroutine ("RemoteWalkStop"); // Coroutine to count the time to stop walking
 			}
 		}
-		if (remoteJump) {
+		if (remoteJump) { // Check if commando to jump was received;
 			Jump ();
 		}
 
-		if (Input.GetAxis ("Horizontal") > 0) {
-			Walk (1);
-			anim.SetBool ("running", true);
-		} else if (Input.GetAxis ("Horizontal") < 0) {
-			Walk (-1);
-			anim.SetBool ("running", true);
-		}
+		ManualControl (); // Routine to walk and jump manualy for tests pourpouse;
+
 		if ((!remoteFWalk) && (Input.GetAxis ("Horizontal") == 0)) {
 			anim.SetBool ("running", false);
 		}
+
+		// Vertical speed check to jump animation;
 		vSpeed = GetComponent<Rigidbody> ().velocity.y;
 		anim.SetFloat ("vSpeed", vSpeed);
-		if (Input.GetKeyDown("space")){
-			Jump();
-		}
 
+		// Check collisions
 		groundCol = Physics.OverlapSphere (groundCheck.position, 0.1f);
 		if ((groundCol.Length > 0) && (groundCol [groundCol.Length-1].tag == "Ground")) {
 			isGrounded = true;
@@ -76,14 +72,10 @@ public class PlayerMovement : MonoBehaviour {
 			anim.SetBool ("running", false);
 			remoteFWalk = false;
 		}
-
-		if (Input.GetKeyDown("r")){
-			Scene actual = SceneManager.GetActiveScene ();
-			SceneManager.LoadScene (actual.name);
-		}
+			
 	}
 
-	void Walk(int dir){
+	void Walk(int dir){ // Walk function
 		rigid.velocity = new Vector2 ((speed*dir), rigid.velocity.y);
 		anim.SetBool ("running", true);
 		if ((dir < 0) && (!isMirror)) {
@@ -95,26 +87,38 @@ public class PlayerMovement : MonoBehaviour {
 		}
 	}
 
-	void Jump(){
+	void Jump(){ // Jump function
 		if (isGrounded) {
 			GetComponent<Rigidbody> ().AddForce (Vector3.up * jumpForce);
 		}
 	}
 		
-	IEnumerator RemoteWalkStop(){
+	IEnumerator RemoteWalkStop(){ // Coroutine to stop walking in a certain time;
 		yield return new WaitForSeconds (walkTime);
 		isWalking = false;
 		Debug.Log ("Stop Walk.");
 		anim.SetBool ("running", false);
 		remoteFWalk = false;
 	}
+		
+	void ManualControl(){ // Routine to walk and jump manualy for tests pourpouse;
+		if (Input.GetAxis ("Horizontal") > 0) {
+			Walk (1);
+			anim.SetBool ("running", true);
+		} else if (Input.GetAxis ("Horizontal") < 0) {
+			Walk (-1);
+			anim.SetBool ("running", true);
+		}
 
-	void OnTriggerEnter(Collider col){
-//		if (col.gameObject.tag == "Wave") {
-//			if ((!remoteFWalk) || (!remoteJump)) {
-//				col.gameObject.GetComponent<WaveBehaviour> ().isSet = false;
-//			}
-//		}
+		if (Input.GetKeyDown("space")){
+			Jump();
+		}
+
+		// Restart level manualy;
+		if (Input.GetKeyDown("r")){
+			Scene actual = SceneManager.GetActiveScene ();
+			SceneManager.LoadScene (actual.name);
+		}
 	}
 
 }

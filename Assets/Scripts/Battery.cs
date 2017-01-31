@@ -5,17 +5,19 @@ using UnityEngine.SceneManagement;
 
 public class Battery : MonoBehaviour {
 
-	public int batNbr;
+	public int batNbr; //Number of the battery in order on level (1 - 3);
 
+	//Variables to get the Material in order to change the color of the element;
 	Renderer rend;
 	Material mat;
-
 	float emission;
 	public Color baseC;
 	Color finalC;
 
+	// Bool to check if this battery was colected or not;
 	bool colected = false;
 
+	// Variables to animate the iten when it gets collected;
 	public Transform posBat1;
 	public Transform posBat2;
 	public Transform posBat3;
@@ -23,23 +25,20 @@ public class Battery : MonoBehaviour {
 	public float smoothTime;
 	public Vector3 finalRot;
 
+	// Variables to count the number of batterys collecteds in the level
 	Scene actual;
 	bool counted = false;
 
-	// Use this for initialization
 	void Start () {
 		rend = GetComponent<Renderer> ();
 		mat = rend.material;
 		actual = SceneManager.GetActiveScene ();
-		//PlayerPrefs.SetInt (actual.name + "Bat", 0);
-
 	}
-
-	// Update is called once per frame
+		
 	void Update () {
-		BlinkLight ();
+		BlinkLight (); //Call function to change the color;
 
-		if (colected) {
+		if (colected) { // Routine to animate the colected batery;
 			if (batNbr == 1) {
 				GetComponent<CapsuleCollider> ().enabled = false;
 				transform.SetParent (Camera.main.transform);
@@ -59,7 +58,7 @@ public class Battery : MonoBehaviour {
 
 	}
 
-	void OnTriggerEnter(Collider col){
+	void OnTriggerEnter(Collider col){ // Check if the player touched the battery;
 		if (col.gameObject.tag == "Player") {
 			colected = true;
 			if ((PlayerPrefs.GetInt (actual.name + "Bat") < 3) && (!counted)) {
@@ -68,8 +67,8 @@ public class Battery : MonoBehaviour {
 			}
 		}
 	}
-
-	void BlinkLight(){
+		
+	void BlinkLight(){ // Routine to change the color;
 		emission = Mathf.PingPong ((Time.time*2), 2f);
 		baseC.b = emission;
 		finalC = baseC;
