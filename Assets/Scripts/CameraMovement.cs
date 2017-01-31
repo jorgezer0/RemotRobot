@@ -10,7 +10,6 @@ public class CameraMovement : MonoBehaviour {
 	public Vector3 followPos;
 	public float smoothTime;
 	Vector3 vel = Vector3.zero;
-	bool isFlip = false;
 
 	void Update () {
 		playerPosition = player.TransformPoint (followPos);
