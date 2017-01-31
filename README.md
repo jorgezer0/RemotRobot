@@ -1,12 +1,12 @@
 # RemotRobot
-Project developed to be evalueted by Samsung Sidia team.
+Project developed to be evaluated by Samsung Sidia team.
 
 ## Project
 Platform game where the character is controlled remotely. The player uses only transmitters to send commands to the character.
 
 ## How to Play
 - Use the Blue button to send blue waves and command the robot to Walk;
-- Use the Green button to send green waves and command the robot to Walk;
+- Use the Green button to send green waves and command the robot to Jump;
 - Combine the waves to jump over the gaps and reach the Red Switch at the end of the level;
 - Use the Orange round button in the left upper corner to restart the level if you get stuck;
 - Use the X shaped button in the right upper corner to exit to main menu;
